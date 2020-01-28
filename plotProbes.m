@@ -38,8 +38,9 @@ close all
         
         linabsmap = [];
         
+        numberOfScans = 92
         % it took 5.326 mins/scan
-        scans = linspace(1, 183, 183) * 5.326 / 60;
+        scans = linspace(1, numberOfScans, numberOfScans) * 5.326 / 60;
         
         figure()
     hold on
@@ -80,7 +81,7 @@ close all
     figure()
     pcolor(scans, probe0(:,1), linabsmap)
     pbaspect([1 1 1]);
-    caxis([0 20000]);
+    caxis([0 5000]);
     colormap((jet(1024)));
     colorbar
     shading interp

@@ -1,7 +1,7 @@
-function [TAmap, delays] = dechirpClicking(TAmap, delays, lambdas, delayRange, lambdaRange, intensityRange, intensityAxis, linewidth, mainFontsize, fileLocation)
+function [TAmap, delays] = dechirpClicking(TAmap, delays, lambdas, delayRange, lambdaRange, intensityRange, intensityAxis, xAxis, linewidth, mainFontsize, fileLocation)
 
     hold on
-    dechirpPlot = plotMap('bwr', delays, lambdas, TAmap, [0 1800], lambdaRange, intensityRange, intensityAxis, linewidth, mainFontsize, fileLocation, 16);
+    dechirpPlot = plotMap('bwr', delays, lambdas, TAmap, [0 700], lambdaRange, intensityRange, intensityAxis, xAxis, linewidth, mainFontsize, fileLocation, 32);
 
     for ii = 1:8
         coords(ii,:) = ginputCustom(1, [1 0 0]);

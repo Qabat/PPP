@@ -7,7 +7,8 @@ function spectraPlot = plotSpectra(TAmap, delays, lambdas, lambdaRange, intensit
     
     colSpectra = hsv(length(spectraDelays));
     clear spectraLegend
-    set(findall(spectraPlot,'-property','TickLength'),'LineWidth',linewidth/1.5)
+    ticksSpectra = findall(spectraPlot,'-property','TickLength');
+    set(ticksSpectra,'LineWidth',linewidth/1.5)
     set(findall(spectraPlot,'-property','FontSize'),'FontName','Arial','FontSize',mainFontsize)
 
     for i = 1:length(spectraDelays)
@@ -17,17 +18,26 @@ function spectraPlot = plotSpectra(TAmap, delays, lambdas, lambdaRange, intensit
        spectraLegend{i} = strcat(num2str(spectraDelays(i)), ' fs');
     end
 
-    plot(lambdas, zeros(1,length(lambdas)), '--', 'Color', 'k', 'Linewidth', linewidth);
+%     plot(lambdas, zeros(1,length(lambdas)), '--', 'Color', 'k', 'Linewidth', linewidth);
+
+%     plot(lambdas, zeros(1,length(lambdas)) + pi/2, '--', 'Color', 'k', 'Linewidth', linewidth);
+%     plot(lambdas, zeros(1,length(lambdas)) - pi/2, '--', 'Color', 'k', 'Linewidth', linewidth);
 
     legend(spectraLegend, 'Location', legendLocation, 'FontSize', legendFontsize)
+
+%     legend({'amplitude', 'phase'}, 'Location', legendLocation, 'FontSize', legendFontsize)
 %     legend('boxoff') 
     xlim(lambdaRange);
     ylim([intensityRange(1)-intensityOffset intensityRange(2)+intensityOffset]);
     xticks([310 350 400 450 500 550 600 650]);
 %             xticks([290 300 310 320 330 340 350]);
+%     yticks([-pi -pi/2 0 pi/2 pi]);
+%     yticklabels({'-\pi','-\pi/2','0','\pi/2','\pi'});
 
-    xlabel('wavelength [nm]');
-    ylabel(intensityAxis);
+    xlabel('probe wavelength [nm]');
+%     ylabel(intensityAxis);
+    ylabel('phase [rad]');
+    
     
     sampleName = cellstr(fileLocation);
     sampleName = sampleName{1};
@@ -36,7 +46,8 @@ function spectraPlot = plotSpectra(TAmap, delays, lambdas, lambdaRange, intensit
     sampleName = erase(sampleName, '.dat');
     sampleName = strrep(sampleName, '_', ' ');
     sampleName = strcat('\fontsize{14}', sampleName);
-    title({'Spectra', sampleName});
+%     title({'Spectra', sampleName});
+%         title('Spectra');
     box on
 
     hold off

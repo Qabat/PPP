@@ -1,7 +1,7 @@
 % This function plots cuts through the map showing dynamics for specific
 % wavelengths.
 
-function dynamicsPlot = plotDynamics(TAmap, delays, lambdas, delayRange, intensityRange, intensityAxis, intensityOffset, dynamicsLambdas, mainFontsize, linewidth, legendLocation, legendFontsize, fileLocation)
+function dynamicsPlot = plotDynamics(TAmap, delays, lambdas, delayRange, intensityRange, intensityAxis, xAxis, intensityOffset, dynamicsLambdas, mainFontsize, linewidth, legendLocation, legendFontsize, fileLocation)
     dynamicsPlot = figure('Position', [1075 518 650 357], 'Name', 'Dynamics', 'NumberTitle', 'off');
     hold all
     
@@ -17,14 +17,16 @@ function dynamicsPlot = plotDynamics(TAmap, delays, lambdas, delayRange, intensi
        dynamicsLegend{i} = strcat(num2str(dynamicsLambdas(i)), ' nm');
     end
 
-    plot(delays, zeros(1,length(delays)), '--', 'Color', 'k', 'Linewidth', linewidth);
+%     plot(delays, zeros(1,length(delays)), '--', 'Color', 'k', 'Linewidth', linewidth);
 
     legend(dynamicsLegend, 'Location', legendLocation, 'FontSize', legendFontsize)
 %     legend('boxoff') 
     xlim(delayRange);
     ylim([intensityRange(1)-intensityOffset intensityRange(2)+intensityOffset]);
-    xlabel('delay [fs]');
+    xlabel(xAxis);
     ylabel(intensityAxis);
+    
+    xticks([100 500 1000]);
     
     sampleName = cellstr(fileLocation);
     sampleName = sampleName{1};
@@ -33,7 +35,8 @@ function dynamicsPlot = plotDynamics(TAmap, delays, lambdas, delayRange, intensi
     sampleName = erase(sampleName, '.dat');
     sampleName = strrep(sampleName, '_', ' ');
     sampleName = strcat('\fontsize{14}', sampleName);
-    title({'Dynamics', sampleName});
+%     title({'Dynamics', sampleName});
+%         title('Dynamics');
     box on
 
     hold off

@@ -19,7 +19,7 @@ function [TAmap, allScans] = shiftZero(allScans, lambdas, lambda, fileLocation)
     
     box on
     grid on
-    xlim([100 200]);
+    xlim([0 200]);
     title('Before shifting');
     hold off
     
@@ -68,6 +68,21 @@ function [TAmap, allScans] = shiftZero(allScans, lambdas, lambda, fileLocation)
     	allScans(:,:,ii) = circshift(allScans(:,:,ii), relativeDelay, 2);
     end
 
+%     % version for shifting for selected lambda just around zero
+%     % this version should only be used if no suitable wavelength can be
+%     % found, such that the signal is sharp enough to do proper shift
+%     t1 = 1;
+%     t2 = 140;
+%     firstScan = allScans(lambdaIndex,t1:t2,1);
+%     [firstScan,~] = smoothdata(firstScan, 'movmean', 10);
+%     for ii = 1:scanNumber(3)
+%         nScan = allScans(lambdaIndex,t1:t2,ii);
+%         [nScan,~] = smoothdata(nScan, 'movmean', 10);
+%         [~,relativeDelay] = max(xcorr(firstScan, nScan));
+%         relativeDelay = relativeDelay - (t2-t1);
+%     	allScans(:,:,ii) = circshift(allScans(:,:,ii), relativeDelay, 2);
+%     end
+%     
     % uncomment for showing the plot after shifting
     subplot(1,2,2)
     for jj = 1:scanNumber(3)
@@ -77,7 +92,7 @@ function [TAmap, allScans] = shiftZero(allScans, lambdas, lambda, fileLocation)
     
         box on
     grid on
-    xlim([100 200]);
+    xlim([0 200]);
     title('After shifting');
     hold off
     

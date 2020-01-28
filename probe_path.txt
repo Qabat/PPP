@@ -1,1 +1,1 @@
-C:\PhD\UV TA\samples\aminoacids\phenylalanine\phenylalanine linear absorption change over time\d191205_01_phenylalanine_magic_257nm_maxconc_30nJ_1mmcuvette_5_probe.dat
+C:\PhD\UV TA\samples\aminoacids\tryptophan\other tryptophan magic angle\tryptophan magic angle 21.01.2020 all\d200121_01_tryptophan_VIS_magic_284nm_185mg_25ml_70nJ_1_probe.dat

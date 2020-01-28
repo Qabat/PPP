@@ -1,29 +1,25 @@
-function [TAmapFFT, frequencyFFT, lambdasFFT] = fftMap(delays, lambdas, TAmapOscillation)
+function [TAmapFFT, TAmapPhase, frequencyFFT, lambdasFFT] = fftMap(delays, lambdas, TAmapOscillation)
 
     % for FFT
 %     N = 512;
     
     % URI
-%     rangeStart = 60;
-%     rangeStop = 120;
-        
+%     rangeStart = 70;
+%     rangeStop = 130;
+%         
     % MTU
-%     rangeStart = 140;
-%     rangeStop = 400;
-%     
+%     rangeStart = 70;
+%     rangeStop = 290;
+    
 %     
 %     % MTU DUV
 %     rangeStart = 70;
 %     rangeStop = 170;
 %     
-    % URI DUV
-%     rangeStart = 65;
-%     rangeStop = 100;   
-%     
 
     % tryptophan VIS
-    rangeStart = 200;
-    rangeStop = 435;
+    rangeStart = 70;
+    rangeStop = 200;
 
     TAmapOscillation = TAmapOscillation(:,rangeStart:rangeStop);
     delaysFFT = delays(rangeStart:rangeStop);
@@ -34,7 +30,7 @@ function [TAmapFFT, frequencyFFT, lambdasFFT] = fftMap(delays, lambdas, TAmapOsc
     samplingFreq = 1./stepDelay; % PHz
     
     % zero padding
-    numberZeros = 1000;
+    numberZeros = 100;
     TAmapOscillation = padarray(TAmapOscillation, [0 numberZeros], 0, 'both');
     delaysFFT = (delaysFFT(1) - numberZeros * stepDelay):stepDelay:(delaysFFT(end) + numberZeros * stepDelay);
     
@@ -48,6 +44,7 @@ function [TAmapFFT, frequencyFFT, lambdasFFT] = fftMap(delays, lambdas, TAmapOsc
     
     
     TAmapFFT = abs(fftshift(fft(TAmapOscillation, [], 2), 2));
+    TAmapPhase = (angle(fftshift(fft(TAmapOscillation, [], 2), 2)));
     
     %normalize
     TAmapFFT = TAmapFFT/max(max(TAmapFFT));

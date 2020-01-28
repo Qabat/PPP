@@ -60,7 +60,7 @@ function [TAmap, cutScans, newlambdas] = rejectScans(allScans, lambdas, lambdaRa
     dotSum = dotSum/max(dotSum);
     dotSum = exp(-(15 .* (1 - dotSum).^2).^4);
     
-    threshold = 0.9;
+    threshold = 0.999;
     
     scanAxis = 2:scanNumber;
     
@@ -69,7 +69,7 @@ function [TAmap, cutScans, newlambdas] = rejectScans(allScans, lambdas, lambdaRa
     % plot correlation matrix
     subplot(2,1,1)
     pcolor(scanAxis, newlambdas, dotMatrix);
-%     intensityRange = [0.5 1];
+%     intensityRange = [0 1];
 %     caxis(intensityRange);
     colormap(jet(1024));
     shading interp
