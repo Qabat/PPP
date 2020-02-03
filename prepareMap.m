@@ -1,15 +1,28 @@
-function [TAmap, TAmapSmoothed, delays, lambdas] = prepareMap(fileExists, lambdaRange)
+function fileLocation = prepareMap(parametersPreparation, rangeVector, plottingVector, lambdaShift, smoothWindowDelayFS, smoothWindowLambdaNM)
 
-% smoothing windows
-smoothWindowDelayFS = 15;   % [fs]
-smoothWindowLambdaNM = 1;  % [nm]
+    readNewSample = parametersPreparation(1);
+    dechirpSample = parametersPreparation(2);
+    smoothSample = parametersPreparation(3);
 
-% shiftZero(); % this should save a new map after shifting
-[TAmap, delays, lambdas] = readMap(fileExists, 'sample');
-TAmap = removeNoise(TAmap, delays);
-[TAmap, lambdas] = cutMap(TAmap, lambdas, lambdaRange);
-[TAmap, delays] = dechirpMap(0, TAmap, lambdaRange);
-TAmapSmoothed = smoothMap(TAmap, smoothWindowDelayFS, smoothWindowLambdaNM, delays, lambdas);
-% saveMap()
+    lambdaRange = rangeVector{2};
+    
+    if readNewSample == 1
+        [allScans, delays, lambdas, fileLocation] = readScans(readNewSample, 'sample');
+        [~, allScans] = shiftZero(allScans, lambdas, lambdaShift, fileLocation);    
+        [chirpedTAmap, ~, lambdas] = rejectScans(allScans, lambdas, lambdaRange, fileLocation);
+        chirpedTAmap = -1000*log10(chirpedTAmap/100 + 1);
+        saveMap(chirpedTAmap, delays, lambdas, fileLocation, '_shifted');
+    end
+
+    if dechirpSample == 1
+        mapVector = {chirpedTAmap, delays, lambdas};
+        [TAmapDechirped, delays] = dechirpClicking(mapVector, rangeVector, plottingVector, fileLocation);
+        saveMap(TAmapDechirped, delays, lambdas, fileLocation, '_dechirped');
+    end
+
+    if smoothSample == 1
+        TAmapSmoothed = smoothMap(TAmapDechirped, delays, lambdas, smoothWindowDelayFS, smoothWindowLambdaNM);
+        saveMap(TAmapSmoothed, delays, lambdas, fileLocation, '_smoothed');
+    end
 
 end

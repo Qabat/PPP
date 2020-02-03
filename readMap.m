@@ -1,6 +1,6 @@
 % This function reads a raw transient absorption map from measurement.
 
-function [TAmap, delays, lambdas] = readMap(fileLocation, appendText)
+function mapVector = readMap(fileLocation, appendText)
 
     TAmap = dlmread([erase(fileLocation, '.dat') appendText '.dat']);
     
@@ -11,4 +11,5 @@ function [TAmap, delays, lambdas] = readMap(fileLocation, appendText)
     lambdas = TAmap(2:end,1);
     TAmap = TAmap(2:end,2:end);
     
+    mapVector = {TAmap, delays, lambdas};
 end

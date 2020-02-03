@@ -1,31 +1,36 @@
-function [TAmap, delays] = dechirpClicking(TAmap, delays, lambdas, delayRange, lambdaRange, intensityRange, intensityAxis, xAxis, linewidth, mainFontsize, fileLocation)
+function [TAmap, delays] = dechirpClicking(mapVector, rangeVector, plottingVector, fileLocation)
 
     hold on
-    dechirpPlot = plotMap('bwr', delays, lambdas, TAmap, [0 700], lambdaRange, intensityRange, intensityAxis, xAxis, linewidth, mainFontsize, fileLocation, 32);
 
+    rangeVector{1} = [0 700];
+    rangeVector{3} = [-1 1];
+
+    TAmap = mapVector{1};
+    delays = mapVector{2};
+    lambdas = mapVector{3};
+    
+    dechirpPlot = plotMap(mapVector, rangeVector, plottingVector, fileLocation);
+    
     for ii = 1:8
-        coords(ii,:) = ginputCustom(1, [1 0 0]);
+        coords(ii,:) = ginputCustom(1, [1 1 1]);
         set(gcf, 'pointer', 'arrow');
-
-        plot(coords(ii,1),coords(ii,2),'rx')
+        plot(coords(ii,1),coords(ii,2),'wx')
     end
 
     xi = coords(:,1);
     yi = coords(:,2);
     x_spline = spline(yi,xi,lambdas);
 
-    plot(x_spline, lambdas, 'w--', xi, yi, 'r*');
+    plot(x_spline, lambdas, 'w--', xi, yi, 'w*');
 
-    hold off   
+    hold off
 
     printPlots('_dechirpPlot', [dechirpPlot], fileLocation);
     
     temp = TAmap;
     
     for k=1:length(lambdas)
-    
-        temp(k,:) = interp1(delays-x_spline(k),TAmap(k,:),delays, 'linear', 0);
-    
+        temp(k,:) = interp1(delays - x_spline(k), TAmap(k,:), delays, 'linear', 0);
     end
   
     TAmap = temp;
