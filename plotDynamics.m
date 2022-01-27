@@ -10,6 +10,9 @@ function dynamicsPlot = plotDynamics(mapVector, rangeVector, plottingVector, dyn
     delayRange = rangeVector{1};
     intensityRange = rangeVector{3};
 
+%     delays = delays/1000;
+%     delayRange = delayRange/1000;
+    
     intensityAxis = plottingVector{1};
     xAxis = plottingVector{2};
     intensityOffset = plottingVector{3};
@@ -26,11 +29,20 @@ function dynamicsPlot = plotDynamics(mapVector, rangeVector, plottingVector, dyn
     set(findall(dynamicsPlot,'-property','TickLength'),'LineWidth',linewidth/1.5)
     set(findall(dynamicsPlot,'-property','FontSize'),'FontName','Arial','FontSize',mainFontsize)
 
+%     dynamicsLambdas = 1240./dynamicsLambdas;
+%     lambdas = 1240./lambdas;
+    
+% fileArray = [];
+
     for i = 1:length(dynamicsLambdas)
        indexLambdas = find(lambdas >= dynamicsLambdas(i),1);
+%               indexLambdas = find(lambdas <= dynamicsLambdas(i),1);
+
        dynamics = TAmap(indexLambdas,:);
        plot(delays, dynamics, 'Color', colDynamics(i,:), 'Linewidth', linewidth); 
-       dynamicsLegend{i} = strcat(num2str(dynamicsLambdas(i)), ' nm');
+%        fileArrayData = [delays, dynamics];
+%        fileArray = [fileArray fileArrayData];
+       dynamicsLegend{i} = strcat(num2str(round(dynamicsLambdas(i),3,'significant')), ' nm');
     end
     plot(delays, zeros(1,length(delays)), '--', 'Color', 'k', 'Linewidth', linewidth);
 
@@ -40,15 +52,17 @@ function dynamicsPlot = plotDynamics(mapVector, rangeVector, plottingVector, dyn
     xlabel(xAxis);
     ylabel(intensityAxis);
         
-    sampleName = cellstr(fileLocation);
-    sampleName = sampleName{1};
-    [~, sampleName] = strtok(sampleName, '1');
-    [~, sampleName] = strtok(sampleName, 'd');
-    sampleName = erase(sampleName, '.dat');
-    sampleName = strrep(sampleName, '_', ' ');
-    sampleName = strcat('\fontsize{14}', sampleName);
-    title({'Dynamics', sampleName});
+%     sampleName = cellstr(fileLocation);
+%     sampleName = sampleName{1};
+%     [~, sampleName] = strtok(sampleName, '1');
+%     [~, sampleName] = strtok(sampleName, 'd');
+%     sampleName = erase(sampleName, '.dat');
+%     sampleName = strrep(sampleName, '_', ' ');
+%     sampleName = strcat('\fontsize{14}', sampleName);
+%     title({'Dynamics', sampleName});
     box on
 
     hold off
+    
+%     dlmwrite('gabor',fileArray,'-append');
 end

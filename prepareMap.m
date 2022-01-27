@@ -1,3 +1,4 @@
+
 function fileLocation = prepareMap(parametersPreparation, rangeVector, plottingVector, lambdaShift, smoothWindowDelayFS, smoothWindowLambdaNM)
 
     readNewSample = parametersPreparation(1);

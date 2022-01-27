@@ -9,9 +9,10 @@ function spectraPlot = compareSpectra(TA1, TA2, delays1, delays2, lambdas1, lamb
     for i = 1:length(spectraDelays)
         subplot(2,2,i);
         hold on 
-        indexLambdas = find(delays1 >= spectraDelays(i),1);
-        spectra1 = TA1(:,indexLambdas);
-        spectra2 = TA2(:,indexLambdas);
+        indexLambdas1 = find(delays1 >= spectraDelays(i),1);
+        spectra1 = TA1(:,indexLambdas1);
+        indexLambdas2 = find(delays2 >= spectraDelays(i),1);
+        spectra2 = TA2(:,indexLambdas2);
 %         spectra1 = spectra1/max(abs(spectra1(564:end)));
 %         spectra2 = spectra2/max(abs(spectra2(564:end)));
         plot(lambdas1, spectra1, 'Color', 'r', 'Linewidth', linewidth);
@@ -48,9 +49,9 @@ function spectraPlot = compareSpectra(TA1, TA2, delays1, delays2, lambdas1, lamb
 %     intensityRange = [min([min(spectra1), min(spectra2)]) max([max(spectra1), max(spectra2)])];
 
     xlim(lambdaRange);
-    ylim([intensityRange(1)*1.5 abs(intensityRange(2))*1.5]);
+    ylim([intensityRange(1) abs(intensityRange(2))]);
     xlabel('wavelength [nm]');
-    ylabel('\DeltaT [%]');
+    ylabel('\DeltaA [mOD]');
         title(strcat(num2str(spectraDelays(i)), ' fs'));
     box on
     hold off

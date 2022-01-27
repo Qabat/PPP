@@ -52,7 +52,7 @@ function dynamicsPlot = compareDynamics(normDelay, TA1, TA2, delays1, delays2, l
     xlim(delayRange);
     ylim([intensityRange(1)-1 intensityRange(2)+1]);
     xlabel('delay [fs]');
-    ylabel('Normalized \DeltaT');
+    ylabel('Normalized \DeltaA');
         title(strcat(num2str(dynamicsLambdas(i)), ' nm'));
     box on
     hold off

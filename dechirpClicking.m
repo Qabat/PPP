@@ -2,9 +2,11 @@ function [TAmap, delays] = dechirpClicking(mapVector, rangeVector, plottingVecto
 
     hold on
 
-    rangeVector{1} = [0 700];
+    rangeVector{1} = [-100 700];
     rangeVector{3} = [-1 1];
 
+%     mapVector{1} = real(mapVector{1});
+    
     TAmap = mapVector{1};
     delays = mapVector{2};
     lambdas = mapVector{3};
@@ -12,7 +14,7 @@ function [TAmap, delays] = dechirpClicking(mapVector, rangeVector, plottingVecto
     dechirpPlot = plotMap(mapVector, rangeVector, plottingVector, fileLocation);
     
     for ii = 1:8
-        coords(ii,:) = ginputCustom(1, [1 1 1]);
+        coords(ii,:) = ginputCustom(1, [0 0 0]);
         set(gcf, 'pointer', 'arrow');
         plot(coords(ii,1),coords(ii,2),'wx')
     end

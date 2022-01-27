@@ -28,7 +28,7 @@ function [TAmap, cutScans, newlambdas] = rejectScans(allScans, lambdas, lambdaRa
     dotSum = dotSum/max(dotSum);
     dotSum = exp(-(15 .* (1 - dotSum).^2).^4);
     
-    threshold = 0.7;
+    threshold = 0;
     
     scanAxis = 2:scanNumber;
     
